@@ -1,8 +1,8 @@
 class JfrogCliGo < Formula
   desc "Command-line interface for Jfrog Artifactory and Bintray"
   homepage "https://github.com/jfrog/jfrog-cli"
-  url "https://github.com/JFrog/jfrog-cli-go/archive/1.32.4.tar.gz"
-  sha256 "84d0305e4170adfb8e88ae9845bc353762992dadde438cf4f4b2e788a9f03f1f"
+  url "https://github.com/JFrog/jfrog-cli-go/archive/1.33.1.tar.gz"
+  sha256 "0960f073991dd2e754ee3809f6c371529de90399f2acdfc3c507dbdc9717d1e6"
 
   bottle do
     cellar :any_skip_relocation
@@ -17,6 +17,9 @@ class JfrogCliGo < Formula
     system "go", "run", "./python/addresources.go"
     system "go", "build", "-ldflags", "-s -w -extldflags '-static'", "-trimpath", "-o", bin/"jfrog"
     prefix.install_metafiles
+    system "go", "generate", "./completion/shells/..."
+    bash_completion.install "completion/shells/bash/jfrog"
+    zsh_completion.install "completion/shells/zsh/jfrog" => "_jfrog"
   end
 
   test do
